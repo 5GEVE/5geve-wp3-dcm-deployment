@@ -31,10 +31,9 @@ It is contained in the automated-infrastructure-scripts Ansible project:
 
 ```sh
 $ cd /tmp
-$ git clone git@gitlab.com:telcaria-code/5g-eve/automated-infrastructure-scripts.git
-$ cd automated-infrastructure-scripts
-$ git checkout dev # if exists - if not, use master branch
-$ cd ansible-dcm
+$ git clone git@github.com:5GEVE/5geve-wp3-dcm-deployment.git
+$ cd 5geve-wp3-dcm-deployment
+$ git checkout dev # if exists - if not, use master branch or whatever
 ```
 
 ### 4. Modify Ansible files
@@ -45,30 +44,31 @@ In this Ansible project, there are some configuration files that must be complet
 * **group_vars:** includes useful variables for the servers defined in the *hosts* file.
 	* **all:** applies to all servers. Nothing to change here at the beginning. Only if you want to be stopped with each Ansible role execution, set *prompt_when_finishes_tasks* to true, or false otherwise. Other variables that may require a change are *kafka_version*, which must be set to the Kafka version to be used, and *update_module*, which specifies if it is an update (true) or an installation from scratch (false).
 
-### 5. Download dcm-python repository from Gitlab
+### 5. Download 5geve-wp3-dcm-handler repository from Gitlab
 
 ```sh
 $ cd /tmp
-$ git clone git@gitlab.com:telcaria-code/5g-eve/dcm-python.git
-$ cd dcm-python
-$ git checkout dev # if exists - if not, use master branch
+$ git clone git@github.com:5GEVE/5geve-wp3-dcm-handler.git
+$ cd 5geve-wp3-dcm-handler
+$ git checkout dev # if exists - if not, use master branch or whatever
 ```
 
-### 6. Compress dcm-python project and put it in this Ansible project as file
+### 6. Compress 5geve-wp3-dcm-handler project and put it in this Ansible project as file
 
-The easiest way to transfer the dcm-python project to the DCM server without having to exchange private keys or related (and confidential) information is to compress the dcm-python project and send it to the DCM server, where it would be decompressed and executed afterwards.
+The easiest way to transfer the 5geve-wp3-dcm-handler project to the DCM server without having to exchange private keys or related (and confidential) information is to compress the 5geve-wp3-dcm-handler project and send it to the DCM server, where it would be decompressed and executed afterwards.
 
 ```sh
 $ cd /tmp
+$ mv 5geve-wp3-dcm-handler dcm-python
 $ tar czf dcm-python.tar.gz dcm-python
-$ mkdir automated-infrastructure-scripts/ansible-dcm/roles/preparation/files # if not exist
-$ mv dcm-python.tar.gz automated-infrastructure-scripts/ansible-dcm/roles/preparation/files
+$ mkdir 5geve-wp3-dcm-deployment/roles/preparation/files # if not exist
+$ mv dcm-python.tar.gz 5geve-wp3-dcm-deployment/roles/preparation/files
 ```
 
 ### 7. Run Ansible
 
 ```sh
-$ cd /tmp/automated-infrastructure-scripts/ansible-dcm
+$ cd /tmp/5geve-wp3-dcm-deployment
 $ ansible-playbook -i hosts main_playbook.yml
 ```
 
