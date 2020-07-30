@@ -27,7 +27,7 @@ $ sudo apt-get install git -y
 
 ### 3. Download this DCM repository from Gitlab
 
-It is contained in the automated-infrastructure-scripts Ansible project:
+It is contained in the 5geve-wp3-dcm-deployment Ansible project:
 
 ```sh
 $ cd /tmp
