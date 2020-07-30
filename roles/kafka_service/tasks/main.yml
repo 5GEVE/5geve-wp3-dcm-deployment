@@ -1,0 +1,16 @@
+---
+- name: Check if kafka.service file exists
+  stat:
+    path: /etc/systemd/system/kafka.service 
+  register: kafka_service_file
+
+- name: Create start-up service for Kafka
+  script: create_kafka_service.sh
+  when: kafka_service_file.stat.exists == false
+
+- name: Start Kafka service
+  shell: systemctl start kafka.service
+
+- name: Press enter to continue
+  pause: prompt='Press enter to continue'
+  when: prompt_when_finishes_tasks

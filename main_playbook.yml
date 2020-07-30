@@ -1,0 +1,34 @@
+---
+- hosts: all
+  become: true
+  gather_facts: no
+  tasks:
+    - include_role:
+        name: preparation
+  handlers:
+    - name: Rebuild locales database
+      command: "{{ item }}"
+      with_items:
+        - dpkg-reconfigure locales -f noninteractive
+        - /usr/sbin/locale-gen
+
+- hosts: all
+  become: true
+  gather_facts: no
+  tasks:
+    - include_role:
+        name: zookeeper_service
+
+- hosts: all
+  become: true
+  gather_facts: no
+  tasks:
+    - include_role:
+        name: kafka_service
+
+- hosts: all
+  become: true
+  gather_facts: no
+  tasks:
+    - include_role:
+        name: dcm_service

@@ -1,0 +1,6 @@
+---
+
+ansible_python_interpreter: /usr/bin/python3
+prompt_when_finishes_tasks: true
+kafka_version: 2.5.0
+update_module: true

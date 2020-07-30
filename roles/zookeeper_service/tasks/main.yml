@@ -1,0 +1,16 @@
+---
+- name: Check if zookeeper.service file exists
+  stat:
+    path: /etc/systemd/system/zookeeper.service 
+  register: zookeeper_service_file
+
+- name: Create start-up service for Zookeeper
+  script: create_zookeeper_service.sh
+  when: zookeeper_service_file.stat.exists == false
+
+- name: Start Zookeeper service
+  shell: systemctl start zookeeper.service
+
+- name: Press enter to continue
+  pause: prompt='Press enter to continue'
+  when: prompt_when_finishes_tasks
