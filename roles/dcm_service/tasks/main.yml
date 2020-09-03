@@ -23,7 +23,7 @@
     state: absent 
 
 - name: Create start-up service for DCM REST Client
-  script: create_dcm_service.sh {{ansible_user}} {{ansible_host}}
+  script: create_dcm_service.sh {{ansible_user}} {{zookeeper_ip_address}}
 
 - name: Start DCM REST Client service
   shell: systemctl start dcm.service

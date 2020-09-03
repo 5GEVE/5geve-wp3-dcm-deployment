@@ -32,3 +32,4 @@
   tasks:
     - include_role:
         name: dcm_service
+      when: site == "iwl"

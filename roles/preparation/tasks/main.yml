@@ -6,25 +6,29 @@
     owner: root
     group: root
     mode: 0755
+  when: site == "iwl"
 
 - name: Check if dcm.service file exists
   stat:
     path: /etc/systemd/system/dcm.service 
   register: dcm_service_file
+  when: site == "iwl"
 
 - name: Stop DCM service
   shell: systemctl stop dcm.service
-  when: dcm_service_file.stat.exists == true  
+  when: site == "iwl" and dcm_service_file.stat.exists == true
 
 - name: Remove dcm-python directory if exists
   file:
     path: /usr/bin/dcm/dcm-python
     state: absent 
+  when: site == "iwl"
 
 - name: Extract dcm-python module
   unarchive:
     src: dcm-python.tar.gz
     dest: /usr/bin/dcm
+  when: site == "iwl"
 
 - name: Installation of required packages
   apt:
@@ -73,15 +77,6 @@
   shell: systemctl stop zookeeper.service
   when: kafka_exists.stat.exists == true
 
-- name: Check if dcm.service file exists
-  stat:
-    path: /etc/systemd/system/dcm.service 
-  register: dcm_service_file
-
-- name: Stop DCM service
-  shell: systemctl stop dcm.service
-  when: dcm_service_file.stat.exists == true  
-
 - name: Remove Kafka repository if exists
   file:
     path: /opt/kafka
@@ -113,7 +108,53 @@
     line: "advertised.listeners=PLAINTEXT://{{ansible_host}}:9092"
   when: not update_module
 
-#TODO: change other parameters for enhanced capabilities.
+- name: Include broker-id, depending on the broker to be configured
+  lineinfile:
+    path: /opt/kafka/config/server.properties
+    regexp: 'broker.id=0'
+    line: "broker.id=1"
+  when: not update_module and site == "iwl"
+
+- name: Include broker-id, depending on the broker to be configured
+  lineinfile:
+    path: /opt/kafka/config/server.properties
+    regexp: 'broker.id=0'
+    line: "broker.id=2"
+  when: not update_module and site == "spain"
+
+- name: Include broker-id, depending on the broker to be configured
+  lineinfile:
+    path: /opt/kafka/config/server.properties
+    regexp: 'broker.id=0'
+    line: "broker.id=3"
+  when: not update_module and site == "italy"
+
+- name: Include broker-id, depending on the broker to be configured
+  lineinfile:
+    path: /opt/kafka/config/server.properties
+    regexp: 'broker.id=0'
+    line: "broker.id=4"
+  when: not update_module and site == "france"
+
+- name: Include broker-id, depending on the broker to be configured
+  lineinfile:
+    path: /opt/kafka/config/server.properties
+    regexp: 'broker.id=0'
+    line: "broker.id=5"
+  when: not update_module and site == "greece"
+
+- name: Change Zookeeper IP address
+  lineinfile:
+    path: /opt/kafka/config/server.properties
+    regexp: 'zookeeper.connect=localhost:2181'
+    line: "zookeeper.connect={{zookeeper_ip_address}}:2181"
+  when: not update_module
+
+- name: Remove Kafka logs
+  file:
+    path: /tmp/kafka-logs/
+    state: absent
+  when: not update_module
 
 - name: Delete topic enable
   lineinfile:
