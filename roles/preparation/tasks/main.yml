@@ -94,19 +94,19 @@
   shell: mv /opt/kafka_2.12-{{kafka_version}} /opt/kafka
   when: not update_module
 
-- name: Include listener for the Kafka Socket Server Settings
+- name: Include listener for the Kafka Socket Server Settings, depending on the broker to be configured
   lineinfile:
     path: /opt/kafka/config/server.properties
     regexp: '#listeners=PLAINTEXT://:9092'
     line: 'listeners=PLAINTEXT://0.0.0.0:9092'
-  when: not update_module
+  when: not update_module and site == "iwl"
 
-- name: Include advertised listener for the Kafka Socket Server Settings
+- name: Include advertised listener for the Kafka Socket Server Settings, depending on the broker to be configured
   lineinfile:
     path: /opt/kafka/config/server.properties
     regexp: '#advertised.listeners=PLAINTEXT://your.host.name:9092'
     line: "advertised.listeners=PLAINTEXT://{{ansible_host}}:9092"
-  when: not update_module
+  when: not update_module and site == "iwl"
 
 - name: Include broker-id, depending on the broker to be configured
   lineinfile:
@@ -115,12 +115,54 @@
     line: "broker.id=1"
   when: not update_module and site == "iwl"
 
+- name: Include broker.rack property, depending on the broker to be configured
+  lineinfile:
+    path: /opt/kafka/config/server.properties
+    line: "broker.rack=dcm"
+    insertafter: EOF
+  when: not update_module and site == "iwl"
+
+- name: Include listener for the Kafka Socket Server Settings, depending on the broker to be configured
+  lineinfile:
+    path: /opt/kafka/config/server.properties
+    regexp: '#listeners=PLAINTEXT://:9092'
+    line: 'listeners=PLAINTEXT://0.0.0.0:9093'
+  when: not update_module and site == "spain"
+
+- name: Include advertised listener for the Kafka Socket Server Settings, depending on the broker to be configured
+  lineinfile:
+    path: /opt/kafka/config/server.properties
+    regexp: '#advertised.listeners=PLAINTEXT://your.host.name:9092'
+    line: "advertised.listeners=PLAINTEXT://{{ansible_host}}:9093"
+  when: not update_module and site == "spain"
+
 - name: Include broker-id, depending on the broker to be configured
   lineinfile:
     path: /opt/kafka/config/server.properties
     regexp: 'broker.id=0'
     line: "broker.id=2"
   when: not update_module and site == "spain"
+
+- name: Include broker.rack property, depending on the broker to be configured
+  lineinfile:
+    path: /opt/kafka/config/server.properties
+    line: "broker.rack=spain"
+    insertafter: EOF
+  when: not update_module and site == "spain"
+
+- name: Include listener for the Kafka Socket Server Settings, depending on the broker to be configured
+  lineinfile:
+    path: /opt/kafka/config/server.properties
+    regexp: '#listeners=PLAINTEXT://:9092'
+    line: 'listeners=PLAINTEXT://0.0.0.0:9094'
+  when: not update_module and site == "italy"
+
+- name: Include advertised listener for the Kafka Socket Server Settings, depending on the broker to be configured
+  lineinfile:
+    path: /opt/kafka/config/server.properties
+    regexp: '#advertised.listeners=PLAINTEXT://your.host.name:9092'
+    line: "advertised.listeners=PLAINTEXT://{{ansible_host}}:9094"
+  when: not update_module and site == "italy"
 
 - name: Include broker-id, depending on the broker to be configured
   lineinfile:
@@ -129,12 +171,54 @@
     line: "broker.id=3"
   when: not update_module and site == "italy"
 
+- name: Include broker.rack property, depending on the broker to be configured
+  lineinfile:
+    path: /opt/kafka/config/server.properties
+    line: "broker.rack=italy"
+    insertafter: EOF
+  when: not update_module and site == "italy"
+
+- name: Include listener for the Kafka Socket Server Settings, depending on the broker to be configured
+  lineinfile:
+    path: /opt/kafka/config/server.properties
+    regexp: '#listeners=PLAINTEXT://:9092'
+    line: 'listeners=PLAINTEXT://0.0.0.0:9095'
+  when: not update_module and site == "france"
+
+- name: Include advertised listener for the Kafka Socket Server Settings, depending on the broker to be configured
+  lineinfile:
+    path: /opt/kafka/config/server.properties
+    regexp: '#advertised.listeners=PLAINTEXT://your.host.name:9092'
+    line: "advertised.listeners=PLAINTEXT://{{ansible_host}}:9095"
+  when: not update_module and site == "france"
+
 - name: Include broker-id, depending on the broker to be configured
   lineinfile:
     path: /opt/kafka/config/server.properties
     regexp: 'broker.id=0'
     line: "broker.id=4"
   when: not update_module and site == "france"
+
+- name: Include broker.rack property, depending on the broker to be configured
+  lineinfile:
+    path: /opt/kafka/config/server.properties
+    line: "broker.rack=france"
+    insertafter: EOF
+  when: not update_module and site == "france"
+
+- name: Include listener for the Kafka Socket Server Settings, depending on the broker to be configured
+  lineinfile:
+    path: /opt/kafka/config/server.properties
+    regexp: '#listeners=PLAINTEXT://:9092'
+    line: 'listeners=PLAINTEXT://0.0.0.0:9096'
+  when: not update_module and site == "greece"
+
+- name: Include advertised listener for the Kafka Socket Server Settings, depending on the broker to be configured
+  lineinfile:
+    path: /opt/kafka/config/server.properties
+    regexp: '#advertised.listeners=PLAINTEXT://your.host.name:9092'
+    line: "advertised.listeners=PLAINTEXT://{{ansible_host}}:9096"
+  when: not update_module and site == "greece"
 
 - name: Include broker-id, depending on the broker to be configured
   lineinfile:
@@ -143,11 +227,32 @@
     line: "broker.id=5"
   when: not update_module and site == "greece"
 
+- name: Include broker.rack property, depending on the broker to be configured
+  lineinfile:
+    path: /opt/kafka/config/server.properties
+    line: "broker.rack=greece"
+    insertafter: EOF
+  when: not update_module and site == "greece"
+
 - name: Change Zookeeper IP address
   lineinfile:
     path: /opt/kafka/config/server.properties
     regexp: 'zookeeper.connect=localhost:2181'
     line: "zookeeper.connect={{zookeeper_ip_address}}:2181"
+  when: not update_module
+
+- name: Include listener.security.protocol.map property
+  lineinfile:
+    path: /opt/kafka/config/server.properties
+    line: "listener.security.protocol.map=PLAINTEXT:PLAINTEXT"
+    insertafter: EOF
+  when: not update_module
+
+- name: Include inter.broker.listener.name property
+  lineinfile:
+    path: /opt/kafka/config/server.properties
+    line: "inter.broker.listener.name=PLAINTEXT"
+    insertafter: EOF
   when: not update_module
 
 - name: Remove Kafka logs

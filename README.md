@@ -44,7 +44,7 @@ In this Ansible project, there are some configuration files that must be complet
 * **group_vars:** includes useful variables for the servers defined in the *hosts* file.
 	* **all:** applies to all servers. Nothing to change here at the beginning. Only if you want to be stopped with each Ansible role execution, set *prompt_when_finishes_tasks* to true, or false otherwise. Other variables that may require a change are *kafka_version*, which must be set to the Kafka version to be used, *update_module*, which specifies if it is an update (true) or an installation from scratch (false), *site*, which specifies the location of the server to be updated, choosing between the following values: iwl (default, broker-id = 1), spain (broker-id = 2), italy (broker-id = 3), france (broker-id = 4) and greece (broker-id = 5), and *zookeeper_ip_address*, which is the IP address to be used by all Kafka brokers to connect to the Zookeeper instance.
 
-### 5. Download 5geve-wp3-dcm-handler repository from Github (only if Kafka broker is not the one from IWL)
+### 5. Download 5geve-wp3-dcm-handler repository from Github (only if Kafka broker is the one from IWL)
 
 ```sh
 $ cd /tmp
@@ -53,7 +53,7 @@ $ cd 5geve-wp3-dcm-handler
 $ git checkout dev # if exists - if not, use master branch or whatever
 ```
 
-### 6. Compress 5geve-wp3-dcm-handler project and put it in this Ansible project as file (only if Kafka broker is not the one from IWL)
+### 6. Compress 5geve-wp3-dcm-handler project and put it in this Ansible project as file (only if Kafka broker is the one from IWL)
 
 The easiest way to transfer the 5geve-wp3-dcm-handler project to the DCM server without having to exchange private keys or related (and confidential) information is to compress the 5geve-wp3-dcm-handler project and send it to the DCM server, where it would be decompressed and executed afterwards.
 
