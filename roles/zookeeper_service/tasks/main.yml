@@ -10,11 +10,6 @@
 
 - name: Start Zookeeper service
   shell: systemctl start zookeeper.service
-  when: site == "iwl"
-
-- name: Stop Zookeeper service
-  shell: systemctl stop zookeeper.service
-  when: site != "iwl"
 
 - name: Press enter to continue
   pause: prompt='Press enter to continue'

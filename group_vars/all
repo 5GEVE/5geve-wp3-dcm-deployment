@@ -1,8 +1,20 @@
 ---
 
 ansible_python_interpreter: /usr/bin/python3
-prompt_when_finishes_tasks: true
+prompt_when_finishes_tasks: false
 kafka_version: 2.5.0
-update_module: false
+update_module: true
 site: iwl # options: iwl, spain, italy, france, greece
-zookeeper_ip_address: 192.168.100.50
+kafka_topics_script_route: /opt/kafka/bin/kafka-topics.sh
+spanish_site_ip_port: 10.7.0.21:9092
+italian_site_ip_port: 127.0.0.1:9092
+french_site_ip_port: 127.0.0.1:9092
+greek_site_ip_port: 127.0.0.1:9092
+spanish_plugin_ip_port: 10.7.0.21:8090
+italian_plugin_ip_port: 127.0.0.1:8090
+french_plugin_ip_port: 127.0.0.1:8090
+greek_plugin_ip_port: 127.0.0.1:8090
+spanish_plugin_port: 8090
+italian_plugin_port: 8090
+french_plugin_port: 8090
+greek_plugin_port: 8090

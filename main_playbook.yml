@@ -33,3 +33,11 @@
     - include_role:
         name: dcm_service
       when: site == "iwl"
+
+- hosts: all
+  become: true
+  gather_facts: no
+  tasks:
+    - include_role:
+        name: site_plugin_service
+      when: site != "iwl"
