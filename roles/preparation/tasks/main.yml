@@ -236,12 +236,40 @@
     line: 'listeners=PLAINTEXT://0.0.0.0:9092'
   when: not update_module
 
-- name: Include advertised listener for the Kafka Socket Server Settings
+- name: Include advertised listener for the Kafka Socket Server Settings (IWL)
   lineinfile:
     path: /opt/kafka/config/server.properties
     regexp: '#advertised.listeners=PLAINTEXT://your.host.name:9092'
     line: "advertised.listeners=PLAINTEXT://{{ansible_host}}:9092"
-  when: not update_module
+  when: not update_module and site == "iwl"
+
+- name: Include advertised listener for the Kafka Socket Server Settings (Spain)
+  lineinfile:
+    path: /opt/kafka/config/server.properties
+    regexp: '#advertised.listeners=PLAINTEXT://your.host.name:9092'
+    line: "advertised.listeners=PLAINTEXT://kafka.spain.iwl:9092"
+  when: not update_module and site == "spain"
+
+- name: Include advertised listener for the Kafka Socket Server Settings (Italy)
+  lineinfile:
+    path: /opt/kafka/config/server.properties
+    regexp: '#advertised.listeners=PLAINTEXT://your.host.name:9092'
+    line: "advertised.listeners=PLAINTEXT://kafka-polito:9092"
+  when: not update_module and site == "italy"
+
+- name: Include advertised listener for the Kafka Socket Server Settings (France)
+  lineinfile:
+    path: /opt/kafka/config/server.properties
+    regexp: '#advertised.listeners=PLAINTEXT://your.host.name:9092'
+    line: "advertised.listeners=PLAINTEXT://kafka.france.iwl:9092"
+  when: not update_module and site == "france"
+
+- name: Include advertised listener for the Kafka Socket Server Settings (Greece)
+  lineinfile:
+    path: /opt/kafka/config/server.properties
+    regexp: '#advertised.listeners=PLAINTEXT://your.host.name:9092'
+    line: "advertised.listeners=PLAINTEXT://kafka.greece.iwl:9092"
+  when: not update_module and site == "greece"
 
 #- name: Remove Kafka logs
 #  file:
@@ -276,6 +304,62 @@
     line: 'auto.create.topics.enable=false'
     insertafter: EOF
   when: not update_module
+
+- name: Change /etc/hosts in IWL (Spain)
+  lineinfile:
+    path: /etc/hosts
+    line: "{{spanish_vpn_ip}} kafka.spain.iwl"
+    insertafter: EOF
+  when: not update_module and site == "iwl"
+
+- name: Change /etc/hosts in IWL (Italy)
+  lineinfile:
+    path: /etc/hosts
+    line: "{{italian_vpn_ip}} kafka-polito"
+    insertafter: EOF
+  when: not update_module and site == "iwl"
+
+- name: Change /etc/hosts in IWL (France)
+  lineinfile:
+    path: /etc/hosts
+    line: "{{french_vpn_ip}} kafka.france.iwl"
+    insertafter: EOF
+  when: not update_module and site == "iwl"
+
+- name: Change /etc/hosts in IWL (Greece)
+  lineinfile:
+    path: /etc/hosts
+    line: "{{greek_vpn_ip}} kafka.greece.iwl"
+    insertafter: EOF
+  when: not update_module and site == "iwl"
+
+- name: Change /etc/hosts in site broker (Spain)
+  lineinfile:
+    path: /etc/hosts
+    line: "{{ansible_host}} kafka.spain.iwl"
+    insertafter: EOF
+  when: not update_module and site == "spain"
+
+- name: Change /etc/hosts in site broker (Italy)
+  lineinfile:
+    path: /etc/hosts
+    line: "{{ansible_host}} kafka-polito"
+    insertafter: EOF
+  when: not update_module and site == "italy"
+
+- name: Change /etc/hosts in site broker (France)
+  lineinfile:
+    path: /etc/hosts
+    line: "{{ansible_host}} kafka.france.iwl"
+    insertafter: EOF
+  when: not update_module and site == "france"
+
+- name: Change /etc/hosts in site broker (Greece)
+  lineinfile:
+    path: /etc/hosts
+    line: "{{ansible_host}} kafka.greece.iwl"
+    insertafter: EOF
+  when: not update_module and site == "greece"
 
 - name: Check if /etc/sudoers file has been modified previously
   shell: cat /etc/sudoers | grep "{{ansible_user}}" | grep NOPASSWD | wc -w

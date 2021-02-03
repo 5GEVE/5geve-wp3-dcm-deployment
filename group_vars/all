@@ -6,11 +6,11 @@ kafka_version: 2.5.0
 update_module: true
 site: iwl # options: iwl, spain, italy, france, greece
 kafka_topics_script_route: /opt/kafka/bin/kafka-topics.sh
-spanish_site_ip_port: 10.7.0.21:9092
+spanish_site_ip_port: 127.0.0.1:9092
 italian_site_ip_port: 127.0.0.1:9092
 french_site_ip_port: 127.0.0.1:9092
 greek_site_ip_port: 127.0.0.1:9092
-spanish_plugin_ip_port: 10.7.0.21:8090
+spanish_plugin_ip_port: 127.0.0.1:8090
 italian_plugin_ip_port: 127.0.0.1:8090
 french_plugin_ip_port: 127.0.0.1:8090
 greek_plugin_ip_port: 127.0.0.1:8090
@@ -18,3 +18,7 @@ spanish_plugin_port: 8090
 italian_plugin_port: 8090
 french_plugin_port: 8090
 greek_plugin_port: 8090
+spanish_vpn_ip: 127.0.0.1
+italian_vpn_ip: 127.0.0.1
+french_vpn_ip: 127.0.0.1
+greek_vpn_ip: 127.0.0.1

@@ -31,11 +31,11 @@
   when: site == "italy"
 
 - name: Create start-up service for DCM Site Plugin REST Client
-  script: create_site_plugin_service.sh {{ansible_user}} {{ansible_host}} {{french_plugin_ip_port}} {{kafka_topics_script_route}}
+  script: create_site_plugin_service.sh {{ansible_user}} {{ansible_host}} {{french_plugin_port}} {{kafka_topics_script_route}}
   when: site == "france"
 
 - name: Create start-up service for DCM Site Plugin REST Client
-  script: create_site_plugin_service.sh {{ansible_user}} {{ansible_host}} {{greek_plugin_ip_port}} {{kafka_topics_script_route}}
+  script: create_site_plugin_service.sh {{ansible_user}} {{ansible_host}} {{greek_plugin_port}} {{kafka_topics_script_route}}
   when: site == "greece"
 
 - name: Start DCM Site Plugin REST Client service
