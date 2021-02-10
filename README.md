@@ -94,3 +94,7 @@ $ ansible-playbook -i hosts main_playbook.yml
 ### 10. Other considerations
 
 * In case you want to monitor how much time is spent in each task, you have to modify the file */etc/ansible/ansible.cfg* by uncommenting the callback_whitelist variable (line 83 of the file, "probably"), putting the following value: *callback_whitelist = profile_tasks*
+
+## Copyright
+
+This work has been done by Telcaria Ideas S.L. for the 5G EVE European project under the [Apache 2.0 License](LICENSE).
