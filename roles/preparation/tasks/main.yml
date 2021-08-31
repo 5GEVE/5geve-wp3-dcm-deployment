@@ -43,7 +43,7 @@
 
 - name: Copy Spanish consumer config
   copy:
-    src: consumer.config
+    src: spanish_consumer.config
     dest: /usr/bin/dcm/spanish_consumer.config
     owner: root
     group: root
@@ -59,7 +59,7 @@
 
 - name: Copy Italian consumer config
   copy:
-    src: consumer.config
+    src: italian_consumer.config
     dest: /usr/bin/dcm/italian_consumer.config
     owner: root
     group: root
@@ -75,7 +75,7 @@
 
 - name: Copy French consumer config
   copy:
-    src: consumer.config
+    src: french_consumer.config
     dest: /usr/bin/dcm/french_consumer.config
     owner: root
     group: root
@@ -91,7 +91,7 @@
 
 - name: Copy Greek consumer config
   copy:
-    src: consumer.config
+    src: greek_consumer.config
     dest: /usr/bin/dcm/greek_consumer.config
     owner: root
     group: root
@@ -119,6 +119,15 @@
     path: /usr/bin/dcm/producer.config
     regexp: 'bootstrap.servers=BROKER_IP:9092'
     line: "bootstrap.servers={{ansible_host}}:9092"
+  when: site == "iwl"
+
+- name: Copy Kafka Mirror services
+  copy:
+    src: kafka-mirror-services/
+    dest: /etc/systemd/system/
+    owner: root
+    group: root
+    mode: 0644
   when: site == "iwl"
 
 - name: Check if dcm.service file exists
